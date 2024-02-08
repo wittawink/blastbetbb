@@ -1,0 +1,38 @@
+.checkCustom:checked,
+.checkCustom:checked:hover,
+.checkCustom:checked:focus {
+  border-color: #48bb8b !important;
+  border-width: 2px;
+  background-color: #dbfff3;
+  /* background-image: url("../assets/images/icons/check-green-border.svg") !important; */
+}
+
+.checkCustom,
+.checkCustom:hover,
+.checkCustom:focus {
+  box-shadow: none !important;
+  border-width: 2px;
+  border-radius: 2px;
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+  margin-right: 16px;
+  padding: 0px;
+}
+
+.radioCustom:checked,
+.radioCustom:checked:hover,
+.radioCustom:checked:focus {
+  border-color: #48bb8b;
+  border-width: 2px;
+  background-color: #dbfff3;
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%2348BB8B' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+}
+
+.radioCustom,
+.radioCustom:hover,
+.radioCustom:focus {
+  border-color: #65748c;
+  border-width: 2px;
+  background-color: transparent;
+}
