@@ -36,3 +36,22 @@
   border-width: 2px;
   background-color: transparent;
 }
+
+.bannerCon {
+  width: 561px;
+  height: 285px;
+  background: #fcfc03;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.bannerCon::after {
+  content: "";
+  position: absolute;
+  right: -140px;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  background-color: #000000;
+  transform: skewX(-45deg);
+}
