@@ -9,7 +9,7 @@ interface ButtonProps {
 export default function BaseButton({ text }: ButtonProps) {
   return (
     <button
-      className={cn(customInput.checkCustom, " hover:bg-white hover:border-8")}
+      className={cn(customInput.connectWallet, 'h-[80px] w-[300px] text-[28px] font-bold bg-[#FCFC03] rounded-[20px] relative overflow-hidden transition-all duration-1000 text-black')}
     >
       {text}
     </button>

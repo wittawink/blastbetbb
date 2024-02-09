@@ -5,6 +5,7 @@ import BaseBanner from "@/ui/base/BaseBanner";
 export default function Home() {
   return (
     <main className="flex items-center p-24">
+      <BaseButton text={"Connect Wallet"}></BaseButton>
       <BaseBanner text={"CASINO"}></BaseBanner>
       <BaseInput text={"Total Wager"}></BaseInput>
       <BaseInput text={"Max Payout"}></BaseInput>
