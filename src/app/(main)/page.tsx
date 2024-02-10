@@ -1,11 +1,13 @@
-import BaseButton from "@/ui/base/BaseButton";
 import LayoutFooter from "@/ui/layout/LayoutFooter";
+import BaseInput from "@/ui/base/BaseInput";
+import BaseBanner from "@/ui/base/BaseBanner";
 
 export default function Home() {
   return (
-    <main className="p-24">
-      <div className="text-7xl">Hello CryptDegree</div>
-      <BaseButton text={"Hello Button"}></BaseButton>
+    <main className="flex flex-col items-center p-24">
+      <BaseBanner text={"CASINO"}></BaseBanner>
+      <BaseInput text={"Total Wager"}></BaseInput>
+      <BaseInput text={"Max Payout"}></BaseInput>
       <LayoutFooter className="mt-[100px]" />
     </main>
   );

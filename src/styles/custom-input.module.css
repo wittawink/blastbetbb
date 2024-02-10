@@ -36,3 +36,59 @@
   border-width: 2px;
   background-color: transparent;
 }
+
+
+
+.connectWallet::before {
+  content: '';
+  position: absolute;
+  left: -60px; 
+  top: 0;
+  bottom: 0;
+  width: 50px;
+  background-color: #000000;
+  transform: skewX(-45deg);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.connectWallet::after {
+  content: '';
+  position: absolute;
+  right: -60px; 
+  top: 0;
+  bottom: 0;
+  width: 50px;
+  background-color: #000000;
+  transform: skewX(-45deg);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+
+.connectWallet:hover::after, .connectWallet:hover::before {
+  opacity: 1;
+}
+
+.connectWallet:hover {
+  border-radius: 0px 20px 0px 20px;
+}
+
+.bannerCon {
+  width: 561px;
+  height: 285px;
+  background: #fcfc03;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.bannerCon::after {
+  content: "";
+  position: absolute;
+  right: -140px;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  background-color: #000000;
+  transform: skewX(-45deg);
+}
