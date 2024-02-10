@@ -1,3 +1,4 @@
+import BaseProfile from "@/ui/base/BaseProfile";
 import React from "react";
 
 interface LayoutHeaderProps {
@@ -5,5 +6,10 @@ interface LayoutHeaderProps {
 }
 
 export default function LayoutHeader({ text }: LayoutHeaderProps) {
-  return <div className="">{text}</div>;
+  return (
+    <div className="m-[24px] flex flex-col">
+      <BaseProfile profileName={"CASINO"} />
+      <div className="grow" />
+    </div>
+  );
 }

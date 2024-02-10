@@ -1,3 +1,4 @@
+import LayoutHeader from "@/ui/layout/LayoutHeader";
 import React from "react";
 
 export default function MainLayout({
@@ -5,7 +6,7 @@ export default function MainLayout({
 }: Readonly<React.PropsWithChildren<{}>>) {
   return (
     <>
-      Hello Layout
+      <LayoutHeader text={""} />
       <main className="flex flex-grow flex-col">{children}</main>
     </>
   );
