@@ -37,12 +37,10 @@
   background-color: transparent;
 }
 
-
-
 .connectWallet::before {
-  content: '';
+  content: "";
   position: absolute;
-  left: -60px; 
+  left: -60px;
   top: 0;
   bottom: 0;
   width: 50px;
@@ -53,9 +51,9 @@
 }
 
 .connectWallet::after {
-  content: '';
+  content: "";
   position: absolute;
-  right: -60px; 
+  right: -60px;
   top: 0;
   bottom: 0;
   width: 50px;
@@ -65,8 +63,8 @@
   transition: opacity 0.5s;
 }
 
-
-.connectWallet:hover::after, .connectWallet:hover::before {
+.connectWallet:hover::after,
+.connectWallet:hover::before {
   opacity: 1;
 }
 
@@ -91,4 +89,25 @@
   width: 60px;
   background-color: #000000;
   transform: skewX(-45deg);
+}
+
+.toggleButton input[type="radio"] {
+  display: none;
+}
+
+.toggleButton label {
+  color: #fcfc03;
+  font-weight: bold;
+  border-radius: 50px;
+  transition: background-color 0.3s;
+  flex: 0 0 245px;
+  height: 97px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggleButton input[type="radio"]:checked + label {
+  background-color: #fcfc03;
+  color: black;
 }
