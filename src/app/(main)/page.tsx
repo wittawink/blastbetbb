@@ -8,7 +8,7 @@ export default function Home() {
       <BaseBanner text={"CASINO"}></BaseBanner>
       <BaseInput text={"Total Wager"}></BaseInput>
       <BaseInput text={"Max Payout"}></BaseInput>
-      <LayoutFooter className="mt-[100px]" />
+      <LayoutFooter className="mt-[500px]" />
     </main>
   );
 }
