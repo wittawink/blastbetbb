@@ -111,3 +111,19 @@
   background-color: #fcfc03;
   color: black;
 }
+
+.slideBar {
+  -webkit-appearance: none;
+  height: 10px;
+  background: #ffffff52;
+}
+
+.slideBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 100%;
+  background: #fcfc03;
+  cursor: pointer;
+}
