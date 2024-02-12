@@ -7,7 +7,7 @@ export default function MainLayout({
 }: Readonly<React.PropsWithChildren<{}>>) {
   return (
     <div className="relative">
-      <LayoutHeader text={"CASINO"} />
+      <LayoutHeader text={"BLAST BET"} />
       <LayoutSidebar text={"hello"} />
       <main className="flex flex-grow flex-col">{children}</main>
     </div>
