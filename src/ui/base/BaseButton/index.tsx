@@ -1,17 +1,25 @@
-import cn from "@/lib/cn";
-import React from "react";
-import customInput from "@/styles/custom-input.module.css";
+import React, { Children, forwardRef } from "react";
 
-interface ButtonProps {
-  text: string;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  className?: string;
 }
 
-export default function BaseButton({ text }: ButtonProps) {
-  return (
-    <button
-      className={cn(customInput.connectWallet, 'h-[80px] w-[300px] text-[28px] font-bold bg-[#FCFC03] rounded-[20px] relative overflow-hidden transition-all duration-1000 text-black')}
-    >
-      {text}
-    </button>
-  );
-}
+const BaseButton = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, className, type, disabled, ...buttonProps }, ref) => {
+    const button = (
+      <button
+        ref={ref}
+        type={type}
+        disabled={disabled}
+        className={className}
+        {...buttonProps}
+      >
+        {children}
+      </button>
+    );
+    return button;
+  }
+);
+
+BaseButton.displayName = "Button";
+export default BaseButton;
