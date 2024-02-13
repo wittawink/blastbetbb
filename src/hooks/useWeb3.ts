@@ -1,64 +1,14 @@
 import useWallet from "@/stores/useWallet";
 import { Maybe } from "@metamask/providers/dist/utils";
 import { useRouter } from "next/navigation";
+import BlastHiRoll from "@/assets/abi/BlastHiRoll.json";
 import Web3 from "web3";
 
 export default function useWeb3() {
   const router = useRouter();
   const { setWalletConnected } = useWallet();
 
-  const contractABI = [
-    {
-      inputs: [
-        {
-          internalType: "string",
-          name: "_greeting",
-          type: "string",
-        },
-      ],
-      stateMutability: "nonpayable",
-      type: "constructor",
-    },
-    {
-      inputs: [],
-      name: "getGreeting",
-      outputs: [
-        {
-          internalType: "string",
-          name: "",
-          type: "string",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "greeting",
-      outputs: [
-        {
-          internalType: "string",
-          name: "",
-          type: "string",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        {
-          internalType: "string",
-          name: "_greeting",
-          type: "string",
-        },
-      ],
-      name: "setGreeting",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-  ];
+  const contractABI = BlastHiRoll.abi;
   const contractAddress = "0x4c36198ba8b0809a5237c8240c2ffeee0c5bf2ec";
 
   const watchForConnectedWallet = () => {

@@ -1,14 +1,32 @@
 import BaseBanner from "@/ui/base/BaseBanner";
 import BaseInput from "@/ui/base/BaseInput";
-import LayoutFooter from "@/ui/layout/LayoutFooter";
+import BaseGradientView from "@/ui/base/BaseGradientView";
+import { Routes } from "@/config/routes";
 
 export default function HomeDetail() {
   return (
-    <main className="flex flex-col items-center p-24">
-      <BaseBanner text={"CASINO"}></BaseBanner>
-      <BaseInput text={"Total Wager"}></BaseInput>
-      <BaseInput text={"Max Payout"}></BaseInput>
-      <LayoutFooter className="mt-[500px]" />
+    <main className="flex flex-col items-center justify-center">
+      <BaseGradientView
+        className="h-[240px] flex items-center justify-center"
+        fromColor={"#11140C"}
+        toColor={"#75835D"}
+        borderColor={"#404833"}
+      >
+        <div className="text-center font-geomGraphic text-[60px] text-[#FCFDC7] font-semibold">
+          Feel the BLAST of victory with BLAST BET!
+        </div>
+      </BaseGradientView>
+      <div className="grid grid-rows-2 grid-cols-3 gap-4 w-full mt-[16px]">
+        <BaseBanner
+          title={"Coinflip"}
+          linkPath={Routes.public.COIN_FLIP}
+        ></BaseBanner>
+        <BaseBanner title={"Dice"} linkPath={Routes.public.DICE}></BaseBanner>
+        <BaseBanner title={"Coming soon"} linkPath={"#"}></BaseBanner>
+        <BaseBanner title={"Coming soon"} linkPath={"#"}></BaseBanner>
+        <BaseBanner title={"Coming soon"} linkPath={"#"}></BaseBanner>
+        <BaseBanner title={"Coming soon"} linkPath={"#"}></BaseBanner>
+      </div>
     </main>
   );
 }
