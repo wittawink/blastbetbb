@@ -40,27 +40,25 @@
 .connectWallet::before {
   content: "";
   position: absolute;
-  left: -60px;
+  left: -55px;
   top: 0;
   bottom: 0;
   width: 50px;
   background-color: #000000;
   transform: skewX(-45deg);
   opacity: 0;
-  transition: opacity 0.5s;
 }
 
 .connectWallet::after {
   content: "";
   position: absolute;
-  right: -60px;
+  right: -55px;
   top: 0;
   bottom: 0;
   width: 50px;
   background-color: #000000;
   transform: skewX(-45deg);
   opacity: 0;
-  transition: opacity 0.5s;
 }
 
 .connectWallet:hover::after,
@@ -69,7 +67,7 @@
 }
 
 .connectWallet:hover {
-  border-radius: 0px 20px 0px 20px;
+  border-radius: 0px 10px 0px 10px;
 }
 
 .bannerCon {
@@ -115,15 +113,16 @@
 .slideBar {
   -webkit-appearance: none;
   height: 10px;
-  background: #ffffff52;
+  background: #404833;
 }
 
 .slideBar::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 100%;
+  width: 16px;
+  height: 16px;
+  rotate: 45deg;
   background: #fcfc03;
   cursor: pointer;
+  filter: drop-shadow(0 0 0.5rem yellow);
 }
