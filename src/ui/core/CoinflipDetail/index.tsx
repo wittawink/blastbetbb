@@ -6,7 +6,7 @@ import BaseButton from "@/ui/base/BaseButton";
 import useWeb3 from "@/hooks/useWeb3";
 import { useEffect } from "react";
 
-export default function DiceDetail() {
+export default function CoinflipDetail() {
   const { callGetGreeting } = useWeb3();
   return (
     <main className="flex flex-col items-center p-24">

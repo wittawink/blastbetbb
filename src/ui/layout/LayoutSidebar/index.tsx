@@ -8,7 +8,7 @@ interface LayoutSidebarProps {
 
 export default function LayoutSidebar({ text }: LayoutSidebarProps) {
   return (
-    <div className="h-[calc(100vh-128px)] border-[2px] border-[#FCFC03] rounded-[20px] p-[16px] mb-[16px] ml-[32px] mr-[16px] float-left sticky top-[112px]">
+    <div className="h-[calc(100vh-120px)] border-[2px] border-[#404833] rounded-[20px] p-[16px] mb-[16px] ml-[32px] mr-[16px] float-left sticky top-[104px]">
       <BaseMenu
         className="mb-[16px]"
         title={"Home"}

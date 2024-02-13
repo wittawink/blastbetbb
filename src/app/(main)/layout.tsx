@@ -9,7 +9,9 @@ export default function MainLayout({
     <div className="relative">
       <LayoutHeader text={"BLAST BET"} />
       <LayoutSidebar text={"hello"} />
-      <main className="flex flex-grow flex-col">{children}</main>
+      <main className="flex flex-grow flex-col pb-[16px] mr-[32px]">
+        {children}
+      </main>
     </div>
   );
 }
