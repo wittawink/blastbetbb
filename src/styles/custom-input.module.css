@@ -73,18 +73,18 @@
 .bannerCon {
   width: 561px;
   height: 285px;
-  background: #fcfc03;
-  border-radius: 10px;
+  background: #9ba885;
+  border-radius: 10px 10px 0px 10px;
   position: relative;
   overflow: hidden;
 }
 .bannerCon::after {
   content: "";
   position: absolute;
-  right: -140px;
+  right: -145px;
   top: 0;
   bottom: 0;
-  width: 60px;
+  width: 65px;
   background-color: #000000;
   transform: skewX(-45deg);
 }
@@ -107,6 +107,7 @@
 
 .toggleButton input[type="radio"]:checked + label {
   background-color: #fcfc03;
+  filter: drop-shadow(0 0 0.3rem yellow);
   color: black;
 }
 

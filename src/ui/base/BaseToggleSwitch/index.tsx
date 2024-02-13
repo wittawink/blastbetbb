@@ -11,7 +11,7 @@ export default function BaseToggleSwitch({ text }: BaseToggleSwitchProps) {
     <div
       className={cn(
         customInput.toggleButton,
-        "flex items-center bg-[#11140C] border-2 border-solid border-[#FCFC03] rounded-[100px] select-none w-[458px] h-[107px]"
+        "flex items-center bg-[#11140C] border-2 border-solid border-[#404833] rounded-[100px] select-none w-[458px] h-[107px]"
       )}
     >
       <input type="radio" id="heads" name="toggle" defaultChecked />
