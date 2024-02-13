@@ -16,7 +16,6 @@ export default function DiceDetail() {
       >
         Get Greeting
       </BaseButton>
-      <BaseBanner title={"DICE"}></BaseBanner>
       <BaseInput text={"Total Wager"}></BaseInput>
       <BaseInput text={"Max Payout"}></BaseInput>
       <BaseGradientView
