@@ -24,7 +24,7 @@ export default function LayoutHeader({ text }: LayoutHeaderProps) {
       <div className="grow" />
       <BaseButton
         className={cn(
-          "h-[80px] w-[450px] text-[28px] font-bold bg-[#FCFC03] rounded-[20px] relative overflow-hidden transition-all duration-1000 text-black",
+          "h-14 w-60 text-xl font-bold bg-[#FCFC03] rounded-[10px] relative overflow-hidden text-black drop-shadow-[0_0_5px_rgba(252,252,3,1)]",
           customInput.connectWallet
         )}
         type="button"

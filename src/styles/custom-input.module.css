@@ -40,27 +40,25 @@
 .connectWallet::before {
   content: "";
   position: absolute;
-  left: -60px;
+  left: -55px;
   top: 0;
   bottom: 0;
   width: 50px;
   background-color: #000000;
   transform: skewX(-45deg);
   opacity: 0;
-  transition: opacity 0.5s;
 }
 
 .connectWallet::after {
   content: "";
   position: absolute;
-  right: -60px;
+  right: -55px;
   top: 0;
   bottom: 0;
   width: 50px;
   background-color: #000000;
   transform: skewX(-45deg);
   opacity: 0;
-  transition: opacity 0.5s;
 }
 
 .connectWallet:hover::after,
@@ -69,24 +67,24 @@
 }
 
 .connectWallet:hover {
-  border-radius: 0px 20px 0px 20px;
+  border-radius: 0px 10px 0px 10px;
 }
 
 .bannerCon {
   width: 561px;
   height: 285px;
-  background: #fcfc03;
-  border-radius: 10px;
+  background: #9ba885;
+  border-radius: 10px 10px 0px 10px;
   position: relative;
   overflow: hidden;
 }
 .bannerCon::after {
   content: "";
   position: absolute;
-  right: -140px;
+  right: -145px;
   top: 0;
   bottom: 0;
-  width: 60px;
+  width: 65px;
   background-color: #000000;
   transform: skewX(-45deg);
 }
@@ -109,21 +107,23 @@
 
 .toggleButton input[type="radio"]:checked + label {
   background-color: #fcfc03;
+  filter: drop-shadow(0 0 0.3rem yellow);
   color: black;
 }
 
 .slideBar {
   -webkit-appearance: none;
   height: 10px;
-  background: #ffffff52;
+  background: #404833;
 }
 
 .slideBar::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 100%;
+  width: 16px;
+  height: 16px;
+  rotate: 45deg;
   background: #fcfc03;
   cursor: pointer;
+  filter: drop-shadow(0 0 0.5rem yellow);
 }
