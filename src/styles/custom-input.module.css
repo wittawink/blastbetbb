@@ -95,7 +95,7 @@
 .toggleButton label {
   color: #fcfc03;
   font-weight: bold;
-  border-radius: 50px;
+  border-radius: 27px;
   transition: background-color 0.3s;
   flex: 0 0 245px;
   height: 97px;
@@ -125,4 +125,51 @@
   background: #fcfc03;
   cursor: pointer;
   filter: drop-shadow(0 0 0.5rem yellow);
+}
+
+.flipCard {
+  perspective: 1000px;
+}
+
+.flipCoinInner {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flipCoinInnerSpin {
+  transform-style: preserve-3d;
+  animation: flip 0.5s infinite;
+}
+
+.flipCoinInnerTransform {
+  transform: rotateY(180deg);
+}
+
+.flipCardFront {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flipCardBack {
+  transform: rotateY(180deg);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  25% {
+    transform: rotateY(180deg);
+  }
+  50% {
+    transform: rotateY(180deg);
+  }
+  75% {
+    transform: rotateY(360deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
 }

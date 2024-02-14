@@ -1,4 +1,4 @@
-import React, { Children, forwardRef } from "react";
+import React, { forwardRef } from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
