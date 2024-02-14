@@ -6,10 +6,15 @@ import { useEffect, useState } from "react";
 import BaseToggleSwitch from "@/ui/base/BaseToggleSwitch";
 import BaseInputSlideBar from "@/ui/base/BaseInputSlideBar";
 import useWallet from "@/stores/useWallet";
+import Head from "@/assets/Icon/coinflip/head.png";
+import Tails from "@/assets/Icon/coinflip/tails.png";
+import Image from "next/image";
+import cn from "@/lib/cn";
+import customInput from "@/styles/custom-input.module.css";
 
 export default function CoinflipDetail() {
   const { getEtherAmountInWallet, callCoinflipbet } = useWeb3();
-  const { walletConnected } = useWallet();
+  const { walletConnected, onCoinFlipContract } = useWallet();
   const [selectHead, setSelectHead] = useState<boolean>(true);
   const [wager, setWager] = useState<string>("0.0001");
   const [maxWager, setMaxWager] = useState<number>(0.0001);
@@ -77,7 +82,33 @@ export default function CoinflipDetail() {
       </div>
       <div className="ml-[16px] w-4/6 flex flex-col gap-4">
         <div className="border-[2px] border-[#404833] rounded-[10px] flex items-center justify-center">
-          <div className="w-[500px] h-[500px] rounded-full bg-[#9BA885] m-[86px]"></div>
+          <div
+            className={cn(
+              customInput.flipCard,
+              "w-[500px] h-[500px] m-[86px] overflow-hidden"
+            )}
+          >
+            <div
+              className={cn(
+                "relative w-full h-full",
+                onCoinFlipContract
+                  ? customInput.flipCoinInnerSpin
+                  : customInput.flipCoinInner,
+                selectHead ? "" : customInput.flipCoinInnerTransform
+              )}
+            >
+              <Image
+                src={Head}
+                alt={"head"}
+                className={cn(customInput.flipCardFront, "absolute")} //"absolute", selectHead ? "" : "hidden"
+              />
+              <Image
+                src={Tails}
+                alt={"tail"}
+                className={cn(customInput.flipCardBack, "absolute")} //"absolute", selectHead ? "hidden" : ""
+              />
+            </div>
+          </div>
         </div>
         <div className="h-[184] border-[2px] border-[#404833] rounded-[10px] flex items-center justify-center">
           <BaseToggleSwitch

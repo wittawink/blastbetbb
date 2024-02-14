@@ -6,7 +6,7 @@ import Web3 from "web3";
 
 export default function useWeb3() {
   const router = useRouter();
-  const { setWalletConnected } = useWallet();
+  const { setWalletConnected, setOnCoinFlipContract } = useWallet();
 
   const contractCoinflipABI = BlastHiRoll.abi;
   const contractCoinflipAddress = process.env.NEXT_PUBLIC_COINFLIP_ADDR;
@@ -103,6 +103,7 @@ export default function useWeb3() {
           );
           const amount = web3.utils.toWei(betAmount, "ether"); // Convert amount to wei
 
+          setOnCoinFlipContract(true);
           contract.methods
             .placeBet(isHead)
             .send({ from: accounts[0], value: amount, gas: "400000" })
@@ -110,6 +111,7 @@ export default function useWeb3() {
               console.log("Transaction hash:", hash);
             })
             .on("receipt", (receipt) => {
+              setOnCoinFlipContract(false);
               console.log("On Receipt: ", receipt);
               if (receipt.events !== undefined) {
                 console.log("GameResultEvent: ", receipt.events.GameResult);
@@ -145,6 +147,7 @@ export default function useWeb3() {
               }
             })
             .on("error", (error: Error) => {
+              setOnCoinFlipContract(false);
               //docs.metamask.io/wallet/reference/wallet_addethereumchain/
               console.error("Error:", error);
             });
