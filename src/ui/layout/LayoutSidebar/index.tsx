@@ -1,6 +1,9 @@
 import { Routes } from "@/config/routes";
 import BaseMenu from "@/ui/base/BaseMenu";
 import React from "react";
+import Home from "@/assets/Icon/home.svg";
+import Dice from "@/assets/Icon/dice.svg";
+import Coin from "@/assets/Icon/coin.svg";
 
 interface LayoutSidebarProps {
   text: string;
@@ -13,16 +16,19 @@ export default function LayoutSidebar({ text }: LayoutSidebarProps) {
         className="mb-[16px]"
         title={"Home"}
         linkPath={Routes.public.HOME}
+        icon={Home}
       />
       <BaseMenu
         className="mb-[16px]"
         title={"Coinflip"}
         linkPath={Routes.public.COIN_FLIP}
+        icon={Coin}
       />
       <BaseMenu
         className="mb-[16px]"
         title={"Dice"}
         linkPath={Routes.public.DICE}
+        icon={Dice}
       />
     </div>
   );
