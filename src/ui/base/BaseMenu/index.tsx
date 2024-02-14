@@ -3,6 +3,7 @@ import cn from "@/lib/cn";
 import React, { useEffect, useState } from "react";
 import BaseButton from "@/ui/base/BaseButton";
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface BaseMenuProps {
   title: string;
@@ -48,7 +49,7 @@ export default function BaseMenu({
           activeButton ? "bg-[#FCFC03]" : "bg-[#404833]"
         )}
       >
-        {icon}
+        <Image src={icon} alt="icon" />
       </div>
       <div
         className={cn(
