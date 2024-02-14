@@ -1,0 +1,175 @@
+.checkCustom:checked,
+.checkCustom:checked:hover,
+.checkCustom:checked:focus {
+  border-color: #48bb8b !important;
+  border-width: 2px;
+  background-color: #dbfff3;
+  /* background-image: url("../assets/images/icons/check-green-border.svg") !important; */
+}
+
+.checkCustom,
+.checkCustom:hover,
+.checkCustom:focus {
+  box-shadow: none !important;
+  border-width: 2px;
+  border-radius: 2px;
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+  margin-right: 16px;
+  padding: 0px;
+}
+
+.radioCustom:checked,
+.radioCustom:checked:hover,
+.radioCustom:checked:focus {
+  border-color: #48bb8b;
+  border-width: 2px;
+  background-color: #dbfff3;
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%2348BB8B' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+}
+
+.radioCustom,
+.radioCustom:hover,
+.radioCustom:focus {
+  border-color: #65748c;
+  border-width: 2px;
+  background-color: transparent;
+}
+
+.connectWallet::before {
+  content: "";
+  position: absolute;
+  left: -55px;
+  top: 0;
+  bottom: 0;
+  width: 50px;
+  background-color: #000000;
+  transform: skewX(-45deg);
+  opacity: 0;
+}
+
+.connectWallet::after {
+  content: "";
+  position: absolute;
+  right: -55px;
+  top: 0;
+  bottom: 0;
+  width: 50px;
+  background-color: #000000;
+  transform: skewX(-45deg);
+  opacity: 0;
+}
+
+.connectWallet:hover::after,
+.connectWallet:hover::before {
+  opacity: 1;
+}
+
+.connectWallet:hover {
+  border-radius: 0px 10px 0px 10px;
+}
+
+.bannerCon {
+  height: 240px;
+  background: #9ba885;
+  border-radius: 10px 10px 0px 10px;
+  position: relative;
+  overflow: hidden;
+}
+.bannerCon::after {
+  content: "";
+  position: absolute;
+  right: -145px;
+  top: 0;
+  bottom: 0;
+  width: 65px;
+  background-color: #000000;
+  transform: skewX(-45deg);
+}
+
+.toggleButton input[type="radio"] {
+  display: none;
+}
+
+.toggleButton label {
+  color: #fcfc03;
+  font-weight: bold;
+  border-radius: 27px;
+  transition: background-color 0.3s;
+  flex: 0 0 245px;
+  height: 97px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggleButton input[type="radio"]:checked + label {
+  background-color: #fcfc03;
+  filter: drop-shadow(0 0 0.3rem yellow);
+  color: black;
+}
+
+.slideBar {
+  -webkit-appearance: none;
+  height: 10px;
+  background: #404833;
+}
+
+.slideBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  rotate: 45deg;
+  background: #fcfc03;
+  cursor: pointer;
+  filter: drop-shadow(0 0 0.5rem yellow);
+}
+
+.flipCard {
+  perspective: 1000px;
+}
+
+.flipCoinInner {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flipCoinInnerSpin {
+  transform-style: preserve-3d;
+  animation: flip 0.5s infinite;
+}
+
+.flipCoinInnerTransform {
+  transform: rotateY(180deg);
+}
+
+.flipCardFront {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flipCardBack {
+  transform: rotateY(180deg);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  25% {
+    transform: rotateY(180deg);
+  }
+  50% {
+    transform: rotateY(180deg);
+  }
+  75% {
+    transform: rotateY(360deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
