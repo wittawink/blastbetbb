@@ -1,25 +1,43 @@
+"use client";
 import cn from "@/lib/cn";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import customInput from "@/styles/custom-input.module.css";
 
 interface BaseInputSlideBarProps {
-  text: string;
+  title: string;
+  value: string;
+  min: number;
+  max: number;
+  step: number;
+  handleOnSlideBar: (value: string) => void;
 }
 
-export default function BaseInputSlideBar({ text }: BaseInputSlideBarProps) {
+export default function BaseInputSlideBar({
+  title,
+  value,
+  min,
+  max,
+  step,
+  handleOnSlideBar,
+}: BaseInputSlideBarProps) {
   return (
-    <div>
-      <p className="text-[20px] font-bold text-[#FCFDC7]">{text}</p>
-      <div className="flex items-center mt-[8px] w-[408px] h-[73px] bg-[#11140C] border-2 rounded-[10px] border-[#9BA885]">
+    <div className="font-geomGraphic">
+      <p className="text-[20px] font-bold text-[#FCFDC7]">{title}</p>
+      <div className="flex items-center mt-[8px] w-full h-14 bg-[#11140C] border-2 rounded-[10px] border-[#9BA885]">
         <p className="text-base text-[#FCFDC7] font-semibold ml-[18px]">
-          {text}
+          {value}
         </p>
       </div>
       <input
-        className={cn(customInput.slideBar, "w-[382px] ml-[12px] mt-[22px]")}
+        className={cn(customInput.slideBar, "w-full mt-[22px]")}
         type="range"
-        min={1}
-        max={100}
+        value={value}
+        min={min}
+        max={max}
+        step={step}
+        onChange={(evt) => {
+          handleOnSlideBar(evt.target.value);
+        }}
       />
     </div>
   );

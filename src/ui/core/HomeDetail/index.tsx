@@ -1,5 +1,5 @@
+"use client";
 import BaseBanner from "@/ui/base/BaseBanner";
-import BaseInput from "@/ui/base/BaseInput";
 import BaseGradientView from "@/ui/base/BaseGradientView";
 import { Routes } from "@/config/routes";
 

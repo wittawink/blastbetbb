@@ -95,7 +95,7 @@
 .toggleButton label {
   color: #fcfc03;
   font-weight: bold;
-  border-radius: 50px;
+  border-radius: 27px;
   transition: background-color 0.3s;
   flex: 0 0 245px;
   height: 97px;

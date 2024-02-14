@@ -8,8 +8,8 @@ export default function useWeb3() {
   const router = useRouter();
   const { setWalletConnected } = useWallet();
 
-  const contractABI = BlastHiRoll.abi;
-  const contractAddress = "0x4c36198ba8b0809a5237c8240c2ffeee0c5bf2ec";
+  const contractCoinflipABI = BlastHiRoll.abi;
+  const contractCoinflipAddress = process.env.NEXT_PUBLIC_COINFLIP_ADDR;
 
   const watchForConnectedWallet = () => {
     if (window.ethereum !== undefined) {
@@ -18,15 +18,28 @@ export default function useWeb3() {
         const accounts = args as string[]; // Type assertion
         // Check if the accounts array is empty, indicating disconnection
         if (accounts.length === 0) {
-          console.log("MetaMask is disconnected");
-          setWalletConnected(false);
           // Handle the disconnection logic here
+          setWalletConnected(false);
         } else {
           // Handle the case where accounts are switched or reconnected
-          console.log("MetaMask is connected with account:", accounts[0]);
+          setWalletConnected(true);
         }
       });
     }
+  };
+
+  const getEtherAmountInWallet = async (): Promise<string | undefined> => {
+    if (window.ethereum !== undefined) {
+      const web3 = new Web3(window.ethereum);
+      const accounts = await web3.eth.getAccounts();
+      if (accounts[0] !== null && accounts[0] !== undefined) {
+        // Get the Ethereum balance
+        const balance = await web3.eth.getBalance(accounts[0]);
+        // Convert balance from Wei to Ether
+        return web3.utils.fromWei(balance, "ether");
+      }
+    }
+    return undefined;
   };
 
   const onConnectWallet = () => {
@@ -35,26 +48,29 @@ export default function useWeb3() {
         .request<string[]>({ method: "eth_requestAccounts" })
         .then((value: Maybe<string[]>) => {
           // Save wallet connected state
-          console.log("Accounts", value);
           if (value !== null && value !== undefined && value[0] !== undefined) {
             setWalletConnected(true);
           }
-
           // Auto change chain
           window.ethereum
             .request({
               method: "wallet_addEthereumChain",
               params: [
                 {
-                  chainId: "0xA0C71FD",
-                  chainName: "Blast Sepolia",
-                  rpcUrls: ["https://sepolia.blast.io"],
+                  chainId: process.env.NEXT_PUBLIC_CHAIN_ID,
+                  chainName: process.env.NEXT_PUBLIC_CHAIN_NAME,
+                  rpcUrls: [process.env.NEXT_PUBLIC_CHAIN_RPC_URLS],
                   nativeCurrency: {
-                    name: "ETH",
-                    symbol: "ETH",
-                    decimals: 18,
+                    name: process.env.NEXT_PUBLIC_CHAIN_NATIVE_CURRENCY_NAME,
+                    symbol:
+                      process.env.NEXT_PUBLIC_CHAIN_NATIVE_CURRENCY_SYMBOL,
+                    decimals: Number(
+                      process.env.NEXT_PUBLIC_CHAIN_NATIVE_CURRENCY_DECIMALS
+                    ),
                   },
-                  blockExplorerUrls: ["https://testnet.blastscan.io"],
+                  blockExplorerUrls: [
+                    process.env.NEXT_PUBLIC_CHAIN_BLOCK_EXPLORER_URLS,
+                  ],
                 },
               ],
             })
@@ -71,50 +87,76 @@ export default function useWeb3() {
     }
   };
 
-  const callGetGreeting = () => {
+  const callCoinflipbet = async (isHead: boolean, betAmount: string) => {
     const web3 = new Web3(window.ethereum);
-    web3.eth.net.getId().then((networkId: bigint) => {
-      console.log("ChainId: ", networkId);
-      console.log("Chain Correct: ", networkId === BigInt(0xa0c71fd));
-      if (networkId === BigInt(0xa0c71fd)) {
-        // Instantiate the Contract
-        const contract = new web3.eth.Contract(contractABI, contractAddress, {
-          provider: "https://sepolia.blast.io",
-        });
+    const accounts = await web3.eth.getAccounts();
+    if (accounts[0] !== null && accounts[0] !== undefined) {
+      web3.eth.net.getId().then(async (networkId: bigint) => {
+        if (networkId === BigInt(process.env.NEXT_PUBLIC_CHAIN_ID!)) {
+          // Instantiate the Contract
+          const contract = new web3.eth.Contract(
+            contractCoinflipABI,
+            contractCoinflipAddress,
+            {
+              provider: process.env.NEXT_PUBLIC_PROVIDER_URLS,
+            }
+          );
+          const amount = web3.utils.toWei(betAmount, "ether"); // Convert amount to wei
 
-        // Interact with the Contract
-        // Call a read-only function
-        contract.methods
-          .getGreeting()
-          .call()
-          .then((result: any) => {
-            console.log("Result: ", result);
-          })
-          .catch((error: Error) => {
-            console.error("Error: ", error);
-          });
+          contract.methods
+            .placeBet(isHead)
+            .send({ from: accounts[0], value: amount, gas: "400000" })
+            .on("transactionHash", (hash: string) => {
+              console.log("Transaction hash:", hash);
+            })
+            .on("receipt", (receipt) => {
+              console.log("On Receipt: ", receipt);
+              if (receipt.events !== undefined) {
+                console.log("GameResultEvent: ", receipt.events.GameResult);
+                console.log(
+                  "GameResultReturnValue: ",
+                  receipt.events.GameResult.returnValues
+                );
+                console.log(
+                  "GameResultReturnValueWon: ",
+                  receipt.events.GameResult.returnValues.won
+                );
 
-        // Send a transaction to a state-changing function
-        // contract.methods
-        //   .setGreeting("Hello from other wallet address!! Test Set")
-        //   .send({ from: accounts[0] })
-        //   .on("transactionHash", (hash: string) => {
-        //     console.log("Transaction hash:", hash);
-        //   })
-        //   .on("confirmation", (confirmationNumber: number, receipt: any) => {
-        //     console.log("Confirmation number:", confirmationNumber);
-        //     console.log("Receipt:", receipt);
-        //   })
-        //   .on("error", (error: Error) => {https://docs.metamask.io/wallet/reference/wallet_addethereumchain/
-        //     console.error("Error:", error);
-        //   });
-      }
-    });
+                if (receipt.events.GameResult.returnValues.won === true) {
+                  contract.methods
+                    .checkRewardBalance()
+                    .call()
+                    .then((result: any) => {
+                      console.log("Result checkRewardBalance: ", result);
+                    })
+                    .catch((error: Error) => {
+                      console.error("Error checkRewardBalance: ", error);
+                    });
+                  // contract.methods
+                  //   .withdrawReward()
+                  //   .call()
+                  //   .then((result: any) => {
+                  //     console.log("Result withdrawReward: ", result);
+                  //   })
+                  //   .catch((error: Error) => {
+                  //     console.error("Error withdrawReward: ", error);
+                  //   });
+                }
+              }
+            })
+            .on("error", (error: Error) => {
+              //docs.metamask.io/wallet/reference/wallet_addethereumchain/
+              console.error("Error:", error);
+            });
+        }
+      });
+    }
   };
 
   return {
     watchForConnectedWallet,
+    getEtherAmountInWallet,
     onConnectWallet,
-    callGetGreeting,
+    callCoinflipbet,
   };
 }
