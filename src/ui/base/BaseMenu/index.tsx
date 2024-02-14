@@ -8,12 +8,14 @@ interface BaseMenuProps {
   title: string;
   linkPath: string;
   className?: string;
+  icon: any;
 }
 
 export default function BaseMenu({
   title,
   linkPath,
   className,
+  icon,
 }: BaseMenuProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -42,10 +44,12 @@ export default function BaseMenu({
     >
       <div
         className={cn(
-          "w-[56px] h-[56px] rounded-full",
+          "w-[56px] h-[56px] rounded-full flex items-center justify-center",
           activeButton ? "bg-[#FCFC03]" : "bg-[#404833]"
         )}
-      ></div>
+      >
+        {icon}
+      </div>
       <div
         className={cn(
           "font-geomGraphic text-base font-semibold mt-[10px]",
