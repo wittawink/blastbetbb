@@ -8,9 +8,9 @@ export default function HomeDetail() {
     <main className="flex flex-col items-center justify-center">
       <BaseGradientView
         className="h-[240px] flex items-center justify-center"
-        fromColor={"#11140C"}
-        toColor={"#75835D"}
-        borderColor={"#404833"}
+        fromColor={"from-[#11140C]"}
+        toColor={"to-[#75835D]"}
+        borderColor={"border-[#404833]"}
       >
         <div className="text-center font-geomGraphic text-[60px] text-[#FCFDC7] font-semibold">
           Feel the BLAST of victory with BLAST BET!
