@@ -1,14 +1,16 @@
-import { CoinFlipResult } from "@/types/coinflip";
+import { GameResult } from "@/types/game";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface UseWallet {
   walletConnected: boolean;
   onCoinFlipContract: boolean;
-  coinFlipResult: CoinFlipResult;
+  coinFlipResult: GameResult;
+  diceGameResult: GameResult;
   setWalletConnected: (walletConnected: boolean) => void;
   setOnCoinFlipContract: (onCoinFlipContract: boolean) => void;
-  setCoinFlipResult: (coinFlipResult: CoinFlipResult) => void;
+  setCoinFlipResult: (coinFlipResult: GameResult) => void;
+  setDiceGameResult: (diceGameResult: GameResult) => void;
 }
 
 const useWallet = create<UseWallet>()(
@@ -16,15 +18,19 @@ const useWallet = create<UseWallet>()(
     (set, get) => ({
       walletConnected: false,
       onCoinFlipContract: false,
-      coinFlipResult: CoinFlipResult.Pending,
+      coinFlipResult: GameResult.Pending,
+      diceGameResult: GameResult.Pending,
       setWalletConnected: (walletConnected: boolean) => {
         set({ walletConnected });
       },
       setOnCoinFlipContract: (onCoinFlipContract: boolean) => {
         set({ onCoinFlipContract });
       },
-      setCoinFlipResult: (coinFlipResult: CoinFlipResult) => {
+      setCoinFlipResult: (coinFlipResult: GameResult) => {
         set({ coinFlipResult });
+      },
+      setDiceGameResult: (diceGameResult: GameResult) => {
+        set({ diceGameResult });
       },
     }),
     {
@@ -33,6 +39,7 @@ const useWallet = create<UseWallet>()(
         walletConnected: state.walletConnected,
         onCoinFlipContract: state.onCoinFlipContract,
         coinFlipResult: state.coinFlipResult,
+        diceGameResult: state.diceGameResult,
       }),
       skipHydration: true,
     }

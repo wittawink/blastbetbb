@@ -11,7 +11,7 @@ import Tails from "@/assets/Icon/coinflip/tails.png";
 import Image from "next/image";
 import cn from "@/lib/cn";
 import customInput from "@/styles/custom-input.module.css";
-import { CoinFlipResult } from "@/types/coinflip";
+import { GameResult } from "@/types/game";
 
 export default function CoinflipDetail() {
   const { getEtherAmountInWallet, callCoinflipbet } = useWeb3();
@@ -46,7 +46,7 @@ export default function CoinflipDetail() {
   };
 
   const onChangeToggleSwitch = (isHead: boolean) => {
-    setCoinFlipResult(CoinFlipResult.Pending);
+    setCoinFlipResult(GameResult.Pending);
     setSelectHead(isHead);
   };
 
@@ -66,11 +66,11 @@ export default function CoinflipDetail() {
 
   const getBorderOnCoinFlipState = () => {
     switch (coinFlipResult) {
-      case CoinFlipResult.Win:
+      case GameResult.Win:
         return "border-[#00CC00]";
-      case CoinFlipResult.Lose:
+      case GameResult.Lose:
         return "border-[#FF3333]";
-      case CoinFlipResult.Pending:
+      case GameResult.Pending:
         return "border-[#404833]";
       default:
         return "border-[#404833]";

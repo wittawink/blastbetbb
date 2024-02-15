@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import BlastCoinFlip from "@/assets/abi/BlastCoinFlip.json";
 import BlastDiceGame from "@/assets/abi/BlastDiceGame.json";
 import Web3 from "web3";
-import { CoinFlipResult } from "@/types/coinflip";
+import { GameResult } from "@/types/game";
 
 export default function useWeb3() {
   const router = useRouter();
@@ -106,7 +106,7 @@ export default function useWeb3() {
             provider: process.env.NEXT_PUBLIC_PROVIDER_URLS,
           }
         );
-        setCoinFlipResult(CoinFlipResult.Pending);
+        setCoinFlipResult(GameResult.Pending);
         setOnCoinFlipContract(true);
         const amount = web3.utils.toWei(betAmount, "ether"); // Convert amount to wei
         contract.methods
@@ -116,9 +116,9 @@ export default function useWeb3() {
             setOnCoinFlipContract(false);
             if (receipt.events !== undefined) {
               if (receipt.events.GameResult.returnValues.won === true) {
-                setCoinFlipResult(CoinFlipResult.Win);
+                setCoinFlipResult(GameResult.Win);
               } else {
-                setCoinFlipResult(CoinFlipResult.Lose);
+                setCoinFlipResult(GameResult.Lose);
               }
             }
           })
