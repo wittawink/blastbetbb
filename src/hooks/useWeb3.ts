@@ -1,15 +1,18 @@
 import useWallet from "@/stores/useWallet";
 import { Maybe } from "@metamask/providers/dist/utils";
 import { useRouter } from "next/navigation";
-import BlastHiRoll from "@/assets/abi/BlastHiRoll.json";
+import BlastCoinFlip from "@/assets/abi/BlastCoinFlip.json";
+import BlastDiceGame from "@/assets/abi/BlastDiceGame.json";
 import Web3 from "web3";
 
 export default function useWeb3() {
   const router = useRouter();
   const { setWalletConnected, setOnCoinFlipContract } = useWallet();
 
-  const contractCoinflipABI = BlastHiRoll.abi;
+  const contractCoinflipABI = BlastCoinFlip.abi;
   const contractCoinflipAddress = process.env.NEXT_PUBLIC_COINFLIP_ADDR;
+  const contractDiceGameABI = BlastDiceGame.abi;
+  const contractDiceGameAddress = process.env.NEXT_PUBLIC_DICEGAME_ADDR;
 
   const watchForConnectedWallet = () => {
     if (window.ethereum !== undefined) {
@@ -125,15 +128,15 @@ export default function useWeb3() {
                 );
 
                 if (receipt.events.GameResult.returnValues.won === true) {
-                  contract.methods
-                    .checkRewardBalance()
-                    .call()
-                    .then((result: any) => {
-                      console.log("Result checkRewardBalance: ", result);
-                    })
-                    .catch((error: Error) => {
-                      console.error("Error checkRewardBalance: ", error);
-                    });
+                  // contract.methods
+                  //   .checkRewardBalance()
+                  //   .call()
+                  //   .then((result: any) => {
+                  //     console.log("Result checkRewardBalance: ", result);
+                  //   })
+                  //   .catch((error: Error) => {
+                  //     console.error("Error checkRewardBalance: ", error);
+                  //   });
                   // contract.methods
                   //   .withdrawReward()
                   //   .call()
