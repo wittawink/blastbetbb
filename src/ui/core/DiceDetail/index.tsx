@@ -146,7 +146,7 @@ export default function DiceDetail() {
             <div className="flex flex-col justify-center items-center">
               <Image
                 className={cn(
-                  "w-[450px] h-[450px] rounded-[10px] p-4 bg-[#9BA885] mb-10",
+                  "w-[450px] h-[450px] rounded-[70px] p-4 bg-[#9BA885] mb-10",
                   onDiceGameContract ? customInput.blink : ""
                 )}
                 src={Dice}
