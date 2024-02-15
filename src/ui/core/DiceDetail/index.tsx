@@ -8,20 +8,28 @@ import BaseInput from "@/ui/base/BaseInput";
 import BaseInputSlideBar from "@/ui/base/BaseInputSlideBar";
 import customInput from "@/styles/custom-input.module.css";
 import Image from "next/image";
+import Dice from "@/assets/Icon/dice.svg";
 import { useState, useEffect } from "react";
+import BaseSlideBar from "@/ui/base/BaseSlideBar";
 
 export default function DiceDetail() {
-  const { getEtherAmountInWallet, callCoinflipbet } = useWeb3();
+  const { getEtherAmountInWallet, callDiceGamebet } = useWeb3();
   const {
     walletConnected,
-    onCoinFlipContract,
-    coinFlipResult,
-    setCoinFlipResult,
+    onDiceGameContract,
+    diceGameResult,
+    diceGameResultValue,
+    setDiceGameResult,
+    setDiceGameResulValue,
   } = useWallet();
-  const [wager, setWager] = useState<string>("0.0001");
-  const [maxWager, setMaxWager] = useState<number>(0.0001);
+  const [wager, setWager] = useState<string>(
+    process.env.NEXT_PUBLIC_DICEGAME_MIN_BET!
+  );
+  const [maxWager, setMaxWager] = useState<number>(
+    Number(process.env.NEXT_PUBLIC_DICEGAME_MIN_BET!)
+  );
   const [roll, setRoll] = useState<string>("50");
-  const [multiplier, setMultiplier] = useState<string>("1.98");
+  const [multiplier, setMultiplier] = useState<string>("1.9800");
   const [winChance, setWinChance] = useState<string>("50");
 
   useEffect(() => {
@@ -44,19 +52,23 @@ export default function DiceDetail() {
     }
   };
 
-  const onChangeWager = (value: string) => {
-    setWager(value);
-  };
-
   const onChangeRoll = (value: string) => {
+    setDiceGameResult(GameResult.Pending);
+    setDiceGameResulValue("-");
     setRoll(value);
     const newWinChance = calculateWinChance(value);
     calculateMultiplier(newWinChance);
   };
 
+  const onChangeWager = (value: string) => {
+    setDiceGameResult(GameResult.Pending);
+    setDiceGameResulValue("-");
+    setWager(value);
+  };
+
   const handleOnClickBet = () => {
     if (walletConnected) {
-      //callCoinflipbet(selectHead, wager);
+      callDiceGamebet(roll, wager);
     }
   };
 
@@ -75,7 +87,7 @@ export default function DiceDetail() {
   };
 
   const getBorderOnDiceGameState = () => {
-    switch (coinFlipResult) {
+    switch (diceGameResult) {
       case GameResult.Win:
         return "border-[#00CC00]";
       case GameResult.Lose:
@@ -94,7 +106,7 @@ export default function DiceDetail() {
           value={wager}
           min={Number(process.env.NEXT_PUBLIC_DICEGAME_MIN_BET!)}
           max={maxWager}
-          step={Number(process.env.NEXT_PUBLIC_DICEGAME_MIN_BET!)}
+          step={Number(process.env.NEXT_PUBLIC_GAME_BET_STEP!)}
           handleOnSlideBar={onChangeWager}
         ></BaseInputSlideBar>
         <div className="flex flex-row gap-4 mt-8">
@@ -119,26 +131,36 @@ export default function DiceDetail() {
         </div>
       </div>
       <div className="ml-[16px] w-4/6 flex flex-col gap-4">
-        <div
-          className={cn(
-            "border-[2px] rounded-[10px] flex items-center justify-center",
-            getBorderOnDiceGameState()
-          )}
-        >
-          <div
-            className={cn(
-              customInput.flipCard,
-              "w-[500px] h-[500px] m-[86px] overflow-hidden"
-            )}
-          >
-            <BaseInputSlideBar
-              title={"Dice"}
-              value={roll}
-              min={Number(process.env.NEXT_PUBLIC_DICEGAME_MIN_ROLL!)}
-              max={Number(process.env.NEXT_PUBLIC_DICEGAME_MAX_ROLL!)}
-              step={Number(process.env.NEXT_PUBLIC_DICEGAME_MIN_ROLL!)}
-              handleOnSlideBar={onChangeRoll}
-            ></BaseInputSlideBar>
+        <div className="border-[#404833] border-[2px] rounded-[10px] flex items-center justify-center">
+          <div className={cn("w-full h-[580px] m-[46px]")}>
+            <div className=" flex justify-end">
+              <div
+                className={cn(
+                  "border-[2px] p-3 rounded-[10px] font-geomGraphic text-[20px]",
+                  getBorderOnDiceGameState()
+                )}
+              >
+                {diceGameResultValue}
+              </div>
+            </div>
+            <div className="flex flex-col justify-center items-center">
+              <Image
+                className={cn(
+                  "w-[450px] h-[450px] rounded-[10px] p-4 bg-[#9BA885] mb-10",
+                  onDiceGameContract ? customInput.blink : ""
+                )}
+                src={Dice}
+                alt="dice-icon"
+              />
+              <BaseSlideBar
+                title={"Dice"}
+                value={roll}
+                min={Number(process.env.NEXT_PUBLIC_DICEGAME_MIN_ROLL!)}
+                max={Number(process.env.NEXT_PUBLIC_DICEGAME_MAX_ROLL!)}
+                step={Number(process.env.NEXT_PUBLIC_DICEGAME_MIN_ROLL!)}
+                handleOnSlideBar={onChangeRoll}
+              />
+            </div>
           </div>
         </div>
         <div className="h-[184] border-[2px] border-[#404833] rounded-[10px] flex items-center justify-center gap-4 p-10">
@@ -146,17 +168,9 @@ export default function DiceDetail() {
             title={"Multiplier"}
             value={multiplier}
             className="w-1/3"
-          ></BaseInput>
-          <BaseInput
-            title={"Roll Over"}
-            value={roll}
-            className="w-1/3"
-          ></BaseInput>
-          <BaseInput
-            title={"Win Chance"}
-            value={winChance}
-            className="w-1/3"
-          ></BaseInput>
+          />
+          <BaseInput title={"Roll Over"} value={roll} className="w-1/3" />
+          <BaseInput title={"Win Chance"} value={winChance} className="w-1/3" />
         </div>
       </div>
     </main>

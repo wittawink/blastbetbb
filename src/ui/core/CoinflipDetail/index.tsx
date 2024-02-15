@@ -22,8 +22,12 @@ export default function CoinflipDetail() {
     setCoinFlipResult,
   } = useWallet();
   const [selectHead, setSelectHead] = useState<boolean>(true);
-  const [wager, setWager] = useState<string>("0.0001");
-  const [maxWager, setMaxWager] = useState<number>(0.0001);
+  const [wager, setWager] = useState<string>(
+    process.env.NEXT_PUBLIC_COINFLIP_MIN_BET!
+  );
+  const [maxWager, setMaxWager] = useState<number>(
+    Number(process.env.NEXT_PUBLIC_COINFLIP_MIN_BET!)
+  );
 
   useEffect(() => {
     useWallet.persist.rehydrate();
@@ -51,6 +55,7 @@ export default function CoinflipDetail() {
   };
 
   const onChangeWager = (value: string) => {
+    setCoinFlipResult(GameResult.Pending);
     setWager(value);
   };
 
@@ -84,7 +89,7 @@ export default function CoinflipDetail() {
           value={wager}
           min={Number(process.env.NEXT_PUBLIC_COINFLIP_MIN_BET!)}
           max={maxWager}
-          step={Number(process.env.NEXT_PUBLIC_COINFLIP_MIN_BET!)}
+          step={Number(process.env.NEXT_PUBLIC_GAME_BET_STEP!)}
           handleOnSlideBar={onChangeWager}
         ></BaseInputSlideBar>
         <div className="flex flex-row gap-4 mt-8">

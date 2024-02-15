@@ -8,8 +8,14 @@ import { GameResult } from "@/types/game";
 
 export default function useWeb3() {
   const router = useRouter();
-  const { setWalletConnected, setOnCoinFlipContract, setCoinFlipResult } =
-    useWallet();
+  const {
+    setWalletConnected,
+    setOnCoinFlipContract,
+    setCoinFlipResult,
+    setOnDiceGameContract,
+    setDiceGameResult,
+    setDiceGameResulValue,
+  } = useWallet();
 
   const contractCoinflipABI = BlastCoinFlip.abi;
   const contractCoinflipAddress = process.env.NEXT_PUBLIC_COINFLIP_ADDR;
@@ -134,10 +140,61 @@ export default function useWeb3() {
     }
   };
 
+  const callDiceGamebet = async (guess: string, betAmount: string) => {
+    const web3 = new Web3(window.ethereum);
+    const accounts = await web3.eth.getAccounts();
+    if (accounts[0] !== null && accounts[0] !== undefined) {
+      const networkId = await web3.eth.net.getId();
+      if (networkId === BigInt(process.env.NEXT_PUBLIC_CHAIN_ID!)) {
+        // Instantiate the Contract
+        const contract = new web3.eth.Contract(
+          contractDiceGameABI,
+          contractDiceGameAddress,
+          {
+            provider: process.env.NEXT_PUBLIC_PROVIDER_URLS,
+          }
+        );
+        setDiceGameResult(GameResult.Pending);
+        setOnDiceGameContract(true);
+        const amount = web3.utils.toWei(betAmount, "ether"); // Convert amount to wei
+        contract.methods
+          .placeBet(guess)
+          .send({ from: accounts[0], value: amount, gas: "400000" })
+          .on("receipt", (receipt) => {
+            setOnDiceGameContract(false);
+            console.log("DiceGame Receipt: ", receipt);
+            if (receipt.events !== undefined) {
+              if (receipt.events.GameResult.returnValues.won === true) {
+                setDiceGameResult(GameResult.Win);
+              } else {
+                setDiceGameResult(GameResult.Lose);
+              }
+              if (receipt.events.GameResult.returnValues.result !== undefined) {
+                setDiceGameResulValue(
+                  String(receipt.events.GameResult.returnValues.result)
+                );
+              } else {
+                setDiceGameResulValue("-");
+              }
+            }
+          })
+          .on("error", (error: Error) => {
+            setOnDiceGameContract(false);
+            console.error("Error:", error);
+          })
+          .catch((error) => {
+            setOnDiceGameContract(false);
+            console.log("Catch Error: ", error);
+          });
+      }
+    }
+  };
+
   return {
     watchForConnectedWallet,
     getEtherAmountInWallet,
     onConnectWallet,
     callCoinflipbet,
+    callDiceGamebet,
   };
 }
