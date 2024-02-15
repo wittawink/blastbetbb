@@ -80,10 +80,10 @@
 .bannerCon::after {
   content: "";
   position: absolute;
-  right: -145px;
+  right: -150px;
   top: 0;
   bottom: 0;
-  width: 65px;
+  width: 70px;
   background-color: #000000;
   transform: skewX(-45deg);
 }
