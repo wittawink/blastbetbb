@@ -111,19 +111,13 @@
 }
 
 .slideBar {
-  -webkit-appearance: none;
+  accent-color: #fcfc03;
   height: 10px;
   background: #404833;
+  cursor: grabbing;
 }
 
 .slideBar::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  rotate: 45deg;
-  background: #fcfc03;
-  cursor: pointer;
   filter: drop-shadow(0 0 0.5rem yellow);
 }
 
