@@ -114,17 +114,19 @@
   -webkit-appearance: none;
   height: 10px;
   background: #404833;
+  overflow: hidden;
 }
 
 .slideBar::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 16px;
-  height: 16px;
-  rotate: 45deg;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
   background: #fcfc03;
   cursor: pointer;
   filter: drop-shadow(0 0 0.5rem yellow);
+  box-shadow: -1007px 0 0 1000px #ffff2042;
 }
 
 .flipCard {
