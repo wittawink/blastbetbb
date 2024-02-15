@@ -8,19 +8,19 @@ import { useRouter } from "next/navigation";
 interface BannerProps {
   title: string;
   linkPath: string;
-  text?: string;
+  subTitle?: string;
   className?: string;
   titleColor?: string;
-  subtitleColor?: string;
+  subTitleColor?: string;
 }
 
 export default function BaseBanner({
   title,
   linkPath,
-  text,
+  subTitle,
   className,
   titleColor,
-  subtitleColor,
+  subTitleColor,
 }: BannerProps) {
   const router = useRouter();
   const handleOnClickBanner = () => {
@@ -43,11 +43,11 @@ export default function BaseBanner({
       <p
         className={cn(
           customInput,
-          subtitleColor,
+          subTitleColor,
           "text-xl text-left text-[#404833] font-geomGraphic font-bold mx-9 left-0"
         )}
       >
-        {text}
+        {subTitle}
       </p>
     </BaseButton>
   );
