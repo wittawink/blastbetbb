@@ -167,3 +167,30 @@
     transform: rotateY(360deg);
   }
 }
+
+.rotate {
+  animation: rotateImage 5s linear infinite;
+}
+
+@keyframes rotateImage {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.blink {
+  animation: blinkAnimation 2s linear infinite;
+}
+
+@keyframes blinkAnimation {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

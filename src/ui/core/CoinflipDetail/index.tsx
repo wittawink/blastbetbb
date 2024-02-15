@@ -11,7 +11,7 @@ import Tails from "@/assets/Icon/coinflip/tails.png";
 import Image from "next/image";
 import cn from "@/lib/cn";
 import customInput from "@/styles/custom-input.module.css";
-import { CoinFlipResult } from "@/types/coinflip";
+import { GameResult } from "@/types/game";
 
 export default function CoinflipDetail() {
   const { getEtherAmountInWallet, callCoinflipbet } = useWeb3();
@@ -22,8 +22,12 @@ export default function CoinflipDetail() {
     setCoinFlipResult,
   } = useWallet();
   const [selectHead, setSelectHead] = useState<boolean>(true);
-  const [wager, setWager] = useState<string>("0.0001");
-  const [maxWager, setMaxWager] = useState<number>(0.0001);
+  const [wager, setWager] = useState<string>(
+    process.env.NEXT_PUBLIC_COINFLIP_MIN_BET!
+  );
+  const [maxWager, setMaxWager] = useState<number>(
+    Number(process.env.NEXT_PUBLIC_COINFLIP_MIN_BET!)
+  );
 
   useEffect(() => {
     useWallet.persist.rehydrate();
@@ -46,11 +50,12 @@ export default function CoinflipDetail() {
   };
 
   const onChangeToggleSwitch = (isHead: boolean) => {
-    setCoinFlipResult(CoinFlipResult.Pending);
+    setCoinFlipResult(GameResult.Pending);
     setSelectHead(isHead);
   };
 
   const onChangeWager = (value: string) => {
+    setCoinFlipResult(GameResult.Pending);
     setWager(value);
   };
 
@@ -66,11 +71,11 @@ export default function CoinflipDetail() {
 
   const getBorderOnCoinFlipState = () => {
     switch (coinFlipResult) {
-      case CoinFlipResult.Win:
+      case GameResult.Win:
         return "border-[#00CC00]";
-      case CoinFlipResult.Lose:
+      case GameResult.Lose:
         return "border-[#FF3333]";
-      case CoinFlipResult.Pending:
+      case GameResult.Pending:
         return "border-[#404833]";
       default:
         return "border-[#404833]";
@@ -84,7 +89,7 @@ export default function CoinflipDetail() {
           value={wager}
           min={Number(process.env.NEXT_PUBLIC_COINFLIP_MIN_BET!)}
           max={maxWager}
-          step={Number(process.env.NEXT_PUBLIC_COINFLIP_MIN_BET!)}
+          step={Number(process.env.NEXT_PUBLIC_GAME_BET_STEP!)}
           handleOnSlideBar={onChangeWager}
         ></BaseInputSlideBar>
         <div className="flex flex-row gap-4 mt-8">

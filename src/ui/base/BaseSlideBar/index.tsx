@@ -21,7 +21,7 @@ export default function BaseSlideBar({
 }: BaseSlideBarProps) {
   return (
     <input
-      className={cn(customInput.slideBar, "w-full mt-[22px]")}
+      className={cn(customInput.slideBar, "w-full")}
       type="range"
       value={value}
       min={min}
