@@ -11,10 +11,16 @@ import Tails from "@/assets/Icon/coinflip/tails.png";
 import Image from "next/image";
 import cn from "@/lib/cn";
 import customInput from "@/styles/custom-input.module.css";
+import { CoinFlipResult } from "@/types/coinflip";
 
 export default function CoinflipDetail() {
   const { getEtherAmountInWallet, callCoinflipbet } = useWeb3();
-  const { walletConnected, onCoinFlipContract } = useWallet();
+  const {
+    walletConnected,
+    onCoinFlipContract,
+    coinFlipResult,
+    setCoinFlipResult,
+  } = useWallet();
   const [selectHead, setSelectHead] = useState<boolean>(true);
   const [wager, setWager] = useState<string>("0.0001");
   const [maxWager, setMaxWager] = useState<number>(0.0001);
@@ -26,12 +32,21 @@ export default function CoinflipDetail() {
 
   const handleGetEthAmount = async () => {
     const ethAmount = await getEtherAmountInWallet();
+    const maxBetAmount = Number(process.env.NEXT_PUBLIC_COINFLIP_MAX_BET!);
     if (ethAmount !== undefined) {
-      setMaxWager(Number(ethAmount));
+      const amount = Number(ethAmount);
+      if (amount > maxBetAmount) {
+        setMaxWager(maxBetAmount);
+      } else {
+        setMaxWager(amount);
+      }
+    } else {
+      setMaxWager(maxBetAmount);
     }
   };
 
   const onChangeToggleSwitch = (isHead: boolean) => {
+    setCoinFlipResult(CoinFlipResult.Pending);
     setSelectHead(isHead);
   };
 
@@ -48,15 +63,28 @@ export default function CoinflipDetail() {
   const calculateMaxPayout = (): string => {
     return ((Number(wager) * 2 * 99) / 100).toFixed(6);
   };
+
+  const getBorderOnCoinFlipState = () => {
+    switch (coinFlipResult) {
+      case CoinFlipResult.Win:
+        return "border-[#00CC00]";
+      case CoinFlipResult.Lose:
+        return "border-[#FF3333]";
+      case CoinFlipResult.Pending:
+        return "border-[#404833]";
+      default:
+        return "border-[#404833]";
+    }
+  };
   return (
     <main className="flex flex-row items-center justify-center">
       <div className="w-2/6 h-[867px] flex flex-col border-[2px] border-[#404833] rounded-[10px] p-[16px]">
         <BaseInputSlideBar
           title={"Wager"}
           value={wager}
-          min={0.0001}
+          min={Number(process.env.NEXT_PUBLIC_COINFLIP_MIN_BET!)}
           max={maxWager}
-          step={0.0001}
+          step={Number(process.env.NEXT_PUBLIC_COINFLIP_MIN_BET!)}
           handleOnSlideBar={onChangeWager}
         ></BaseInputSlideBar>
         <div className="flex flex-row gap-4 mt-8">
@@ -81,7 +109,12 @@ export default function CoinflipDetail() {
         </div>
       </div>
       <div className="ml-[16px] w-4/6 flex flex-col gap-4">
-        <div className="border-[2px] border-[#404833] rounded-[10px] flex items-center justify-center">
+        <div
+          className={cn(
+            "border-[2px] rounded-[10px] flex items-center justify-center",
+            getBorderOnCoinFlipState()
+          )}
+        >
           <div
             className={cn(
               customInput.flipCard,

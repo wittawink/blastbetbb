@@ -19,7 +19,11 @@ export default function BaseGradientView({
     <div
       className={cn(
         className,
-        `w-full rounded-[20px] bg-gradient-to-br from-[${fromColor}] to-[${toColor}] border-[${borderColor}] border-[2px]`
+        "w-full rounded-[20px] border-[2px]",
+        borderColor,
+        "bg-gradient-to-br",
+        fromColor,
+        toColor
       )}
     >
       {children}
