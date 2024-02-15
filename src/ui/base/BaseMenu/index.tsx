@@ -39,14 +39,16 @@ export default function BaseMenu({
         className,
         "w-[108px] h-[108px] rounded-[10px] border border-solid  flex flex-col items-center justify-center ",
         activeButton
-          ? "bg-[#FCFDC73F] border-[#FCFC03]"
+          ? "bg-[#FCFDC73F] border-[#FCFC03] drop-shadow-[0_0_4px_rgba(255,234,0,0.5)]"
           : "bg-[#11140C] border-[#404833]"
       )}
     >
       <div
         className={cn(
           "w-[56px] h-[56px] rounded-full flex items-center justify-center",
-          activeButton ? "bg-[#FCFC03]" : "bg-[#404833]"
+          activeButton
+            ? "bg-[#FCFC03] drop-shadow-[0_0_4px_rgba(255,234,0,0.5)]"
+            : "bg-[#404833]"
         )}
       >
         <Image src={icon} alt="icon" />
@@ -54,7 +56,9 @@ export default function BaseMenu({
       <div
         className={cn(
           "font-geomGraphic text-base font-semibold mt-[10px]",
-          activeButton ? "text-[#FCFC03]" : "text-[#404833]"
+          activeButton
+            ? "text-[#FCFC03] drop-shadow-[0_0_4px_rgba(255,234,0,0.5)]"
+            : "text-[#404833]"
         )}
       >
         {title}
