@@ -4,10 +4,12 @@ import { useRouter } from "next/navigation";
 import BlastCoinFlip from "@/assets/abi/BlastCoinFlip.json";
 import BlastDiceGame from "@/assets/abi/BlastDiceGame.json";
 import Web3 from "web3";
+import { CoinFlipResult } from "@/types/coinflip";
 
 export default function useWeb3() {
   const router = useRouter();
-  const { setWalletConnected, setOnCoinFlipContract } = useWallet();
+  const { setWalletConnected, setOnCoinFlipContract, setCoinFlipResult } =
+    useWallet();
 
   const contractCoinflipABI = BlastCoinFlip.abi;
   const contractCoinflipAddress = process.env.NEXT_PUBLIC_COINFLIP_ADDR;
@@ -54,7 +56,7 @@ export default function useWeb3() {
           if (value !== null && value !== undefined && value[0] !== undefined) {
             setWalletConnected(true);
           }
-          // Auto change chain
+          // Auto add and change chain
           window.ethereum
             .request({
               method: "wallet_addEthereumChain",
@@ -94,68 +96,41 @@ export default function useWeb3() {
     const web3 = new Web3(window.ethereum);
     const accounts = await web3.eth.getAccounts();
     if (accounts[0] !== null && accounts[0] !== undefined) {
-      web3.eth.net.getId().then(async (networkId: bigint) => {
-        if (networkId === BigInt(process.env.NEXT_PUBLIC_CHAIN_ID!)) {
-          // Instantiate the Contract
-          const contract = new web3.eth.Contract(
-            contractCoinflipABI,
-            contractCoinflipAddress,
-            {
-              provider: process.env.NEXT_PUBLIC_PROVIDER_URLS,
-            }
-          );
-          const amount = web3.utils.toWei(betAmount, "ether"); // Convert amount to wei
-
-          setOnCoinFlipContract(true);
-          contract.methods
-            .placeBet(isHead)
-            .send({ from: accounts[0], value: amount, gas: "400000" })
-            .on("transactionHash", (hash: string) => {
-              console.log("Transaction hash:", hash);
-            })
-            .on("receipt", (receipt) => {
-              setOnCoinFlipContract(false);
-              console.log("On Receipt: ", receipt);
-              if (receipt.events !== undefined) {
-                console.log("GameResultEvent: ", receipt.events.GameResult);
-                console.log(
-                  "GameResultReturnValue: ",
-                  receipt.events.GameResult.returnValues
-                );
-                console.log(
-                  "GameResultReturnValueWon: ",
-                  receipt.events.GameResult.returnValues.won
-                );
-
-                if (receipt.events.GameResult.returnValues.won === true) {
-                  // contract.methods
-                  //   .checkRewardBalance()
-                  //   .call()
-                  //   .then((result: any) => {
-                  //     console.log("Result checkRewardBalance: ", result);
-                  //   })
-                  //   .catch((error: Error) => {
-                  //     console.error("Error checkRewardBalance: ", error);
-                  //   });
-                  // contract.methods
-                  //   .withdrawReward()
-                  //   .call()
-                  //   .then((result: any) => {
-                  //     console.log("Result withdrawReward: ", result);
-                  //   })
-                  //   .catch((error: Error) => {
-                  //     console.error("Error withdrawReward: ", error);
-                  //   });
-                }
+      const networkId = await web3.eth.net.getId();
+      if (networkId === BigInt(process.env.NEXT_PUBLIC_CHAIN_ID!)) {
+        // Instantiate the Contract
+        const contract = new web3.eth.Contract(
+          contractCoinflipABI,
+          contractCoinflipAddress,
+          {
+            provider: process.env.NEXT_PUBLIC_PROVIDER_URLS,
+          }
+        );
+        setCoinFlipResult(CoinFlipResult.Pending);
+        setOnCoinFlipContract(true);
+        const amount = web3.utils.toWei(betAmount, "ether"); // Convert amount to wei
+        contract.methods
+          .placeBet(isHead)
+          .send({ from: accounts[0], value: amount, gas: "400000" })
+          .on("receipt", (receipt) => {
+            setOnCoinFlipContract(false);
+            if (receipt.events !== undefined) {
+              if (receipt.events.GameResult.returnValues.won === true) {
+                setCoinFlipResult(CoinFlipResult.Win);
+              } else {
+                setCoinFlipResult(CoinFlipResult.Lose);
               }
-            })
-            .on("error", (error: Error) => {
-              setOnCoinFlipContract(false);
-              //docs.metamask.io/wallet/reference/wallet_addethereumchain/
-              console.error("Error:", error);
-            });
-        }
-      });
+            }
+          })
+          .on("error", (error: Error) => {
+            setOnCoinFlipContract(false);
+            console.error("Error:", error);
+          })
+          .catch((error) => {
+            setOnCoinFlipContract(false);
+            console.log("Catch Error: ", error);
+          });
+      }
     }
   };
 
