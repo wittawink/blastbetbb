@@ -4,7 +4,6 @@ import BaseInput from "@/ui/base/BaseInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import TwitterData from "@/assets/twitter/TwitterData.json";
 import { useRouter } from "next/navigation";
 import { Routes } from "@/config/routes";
 import { setCookie } from "cookies-next";
@@ -26,6 +25,7 @@ export default function GenerateTwitterTokenStep1Detail() {
   const onStep1Submit: SubmitHandler<z.infer<typeof step1FormSchema>> = (
     data
   ) => {
+    const TwitterData = JSON.parse(process.env.NEXT_PUBLIC_TWITTER_DATA!);
     type JsonKeys = keyof typeof TwitterData;
     const keys: JsonKeys = data.inviteCode as JsonKeys;
     if (TwitterData[keys] != undefined) {

@@ -1,5 +1,4 @@
 import GenerateTwitterTokenStep2Detail from "@/ui/core/GenerateTwitterTokenDetail/Step2";
-import TwitterData from "@/assets/twitter/TwitterData.json";
 import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import { TwitterApi } from "twitter-api-v2";
@@ -7,6 +6,7 @@ import { TwitterAuthLink } from "@/types/twitter";
 
 export default async function GenerateTwitterTokenStep2() {
   const groupSelect = getCookie("groupSelect", { cookies });
+  const TwitterData = JSON.parse(process.env.NEXT_PUBLIC_TWITTER_DATA!);
   type JsonKeys = keyof typeof TwitterData;
   const keys: JsonKeys = groupSelect as JsonKeys;
   const twitterData = TwitterData[keys];
