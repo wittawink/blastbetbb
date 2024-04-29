@@ -1,6 +1,6 @@
 "use client";
 import cn from "@/lib/cn";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import customInput from "@/styles/custom-input.module.css";
 
 interface BaseInputSlideBarProps {

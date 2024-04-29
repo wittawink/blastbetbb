@@ -4,7 +4,7 @@ import cn from "@/lib/cn";
 import useWallet from "@/stores/useWallet";
 import { GameResult } from "@/types/game";
 import BaseButton from "@/ui/base/BaseButton";
-import BaseInput from "@/ui/base/BaseInput";
+import BaseTextBox from "@/ui/base/BaseTextBox";
 import BaseInputSlideBar from "@/ui/base/BaseInputSlideBar";
 import customInput from "@/styles/custom-input.module.css";
 import Image from "next/image";
@@ -110,16 +110,12 @@ export default function DiceDetail() {
           handleOnSlideBar={onChangeWager}
         ></BaseInputSlideBar>
         <div className="flex flex-row gap-4 mt-8">
-          <BaseInput
-            title={"Total Wager"}
-            value={wager}
-            className="w-1/2"
-          ></BaseInput>
-          <BaseInput
+          <BaseTextBox title={"Total Wager"} value={wager} className="w-1/2" />
+          <BaseTextBox
             title={"Max Payout"}
             value={calculateMaxPayout()}
             className="w-1/2"
-          ></BaseInput>
+          />
         </div>
         <div className="flex justify-center mt-8">
           <BaseButton
@@ -164,13 +160,17 @@ export default function DiceDetail() {
           </div>
         </div>
         <div className="h-[184] border-[2px] border-[#404833] rounded-[10px] flex items-center justify-center gap-4 p-10">
-          <BaseInput
+          <BaseTextBox
             title={"Multiplier"}
             value={multiplier}
             className="w-1/3"
           />
-          <BaseInput title={"Roll Over"} value={roll} className="w-1/3" />
-          <BaseInput title={"Win Chance"} value={winChance} className="w-1/3" />
+          <BaseTextBox title={"Roll Over"} value={roll} className="w-1/3" />
+          <BaseTextBox
+            title={"Win Chance"}
+            value={winChance}
+            className="w-1/3"
+          />
         </div>
       </div>
     </main>
