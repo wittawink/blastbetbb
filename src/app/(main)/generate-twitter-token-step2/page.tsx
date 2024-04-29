@@ -24,6 +24,7 @@ export default async function GenerateTwitterTokenStep2() {
     console.log("Twitter Auth Link: ", authLink);
     return authLink;
   };
+
   var twitterAuthLinkData;
   if (twitterData != undefined) {
     console.log(twitterData);
