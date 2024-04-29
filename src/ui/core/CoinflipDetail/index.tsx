@@ -1,5 +1,5 @@
 "use client";
-import BaseInput from "@/ui/base/BaseInput";
+import BaseTextBox from "@/ui/base/BaseTextBox";
 import BaseButton from "@/ui/base/BaseButton";
 import useWeb3 from "@/hooks/useWeb3";
 import { useEffect, useState } from "react";
@@ -93,16 +93,12 @@ export default function CoinflipDetail() {
           handleOnSlideBar={onChangeWager}
         ></BaseInputSlideBar>
         <div className="flex flex-row gap-4 mt-8">
-          <BaseInput
-            title={"Total Wager"}
-            value={wager}
-            className="w-1/2"
-          ></BaseInput>
-          <BaseInput
+          <BaseTextBox title={"Total Wager"} value={wager} className="w-1/2" />
+          <BaseTextBox
             title={"Max Payout"}
             value={calculateMaxPayout()}
             className="w-1/2"
-          ></BaseInput>
+          />
         </div>
         <div className="flex justify-center mt-8">
           <BaseButton

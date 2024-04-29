@@ -9,13 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@metamask/providers": "^14.0.2",
     "clsx": "^2.1.0",
+    "cookies-next": "^4.1.1",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.51.3",
     "tailwind-merge": "^2.2.1",
+    "twitter-api-v2": "^1.16.3",
     "web3": "^4.4.0",
+    "zod": "^3.23.4",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
